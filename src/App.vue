@@ -1,9 +1,18 @@
 <script setup lang="ts">
 const route = useRoute()
+const nav_list = [
+  '/', '/cube', '/chat', '/user',
+]
+
+const showNav = ref(true)
+
 watch(route, (newval, oldval) => {
-  console.log('newval', newval)
-  console.log('oldval', oldval)
+  if (nav_list.includes(newval.path))
+    showNav.value = true
+  else
+    showNav.value = false
 })
+
 </script>
 <template>
   <main text="center gray-700 dark:gray-200" flex="~ col " w-screen h-screen>
@@ -13,7 +22,7 @@ watch(route, (newval, oldval) => {
         <component :is="Component" flex-1 h-screen />
       </transition>
     </router-view>
-    <Footer />
+    <Footer v-show="showNav" />
   </main>
 </template>
 <style>
